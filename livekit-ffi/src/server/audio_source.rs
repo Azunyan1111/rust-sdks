@@ -93,6 +93,8 @@ impl FfiAudioSource {
                         sample_rate: buffer.sample_rate,
                         num_channels: buffer.num_channels,
                         samples_per_channel: buffer.samples_per_channel,
+                        callback_time_ms: 0,
+                        absolute_capture_timestamp_ms: None,
                     };
 
                     let res = source.capture_frame(&audio_frame).await;

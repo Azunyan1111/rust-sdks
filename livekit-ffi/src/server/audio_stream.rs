@@ -401,6 +401,8 @@ impl FfiAudioStream {
                                 sample_rate,
                                 num_channels,
                                 samples_per_channel: target as u32 / num_channels,
+                                callback_time_ms: 0,
+                                absolute_capture_timestamp_ms: None,
                             };
                             let handle_id = server.next_id();
                             let buffer_info = proto::AudioFrameBufferInfo::from(&new_frame);

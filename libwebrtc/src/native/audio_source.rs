@@ -99,6 +99,9 @@ impl NativeAudioSource {
 
         // Fast path: no buffering
         if self.queue_size_samples == 0 {
+            extern "C" fn lk_audio_source_noop_complete(_userdata: *const sys_at::SourceContext) {
+            }
+
             // frame size must be 10ms for fast path
             let expected_frames_per_ch = (self.sample_rate / 100) as usize;
             if frame.data.len() % (self.num_channels as usize) != 0 {
@@ -127,7 +130,7 @@ impl NativeAudioSource {
                     self.num_channels,
                     nb_frames,
                     std::ptr::null(),
-                    std::mem::zeroed::<sys_at::CompleteCallback>(),
+                    sys_at::CompleteCallback(lk_audio_source_noop_complete),
                 );
                 if !ok {
                     return Err(RtcError {

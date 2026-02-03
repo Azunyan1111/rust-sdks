@@ -596,6 +596,8 @@ fn remix_and_resample(
         num_channels: remix.num_channels,
         samples_per_channel: data_len,
         sample_rate: remix.sample_rate,
+        callback_time_ms: 0,
+        absolute_capture_timestamp_ms: None,
     };
 
     let handle_id = server.next_id();

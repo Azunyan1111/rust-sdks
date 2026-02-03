@@ -17,6 +17,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <vector>
 
 #include "api/audio/audio_frame.h"
@@ -79,7 +80,8 @@ class NativeAudioSink : public webrtc::AudioTrackSinkInterface {
               int bits_per_sample,
               int sample_rate,
               size_t number_of_channels,
-              size_t number_of_frames) override;
+              size_t number_of_frames,
+              std::optional<int64_t> absolute_capture_timestamp_ms) override;
 
  private:
   rust::Box<AudioSinkWrapper> observer_;

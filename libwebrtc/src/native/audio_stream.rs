@@ -78,12 +78,28 @@ pub struct AudioTrackObserver {
 }
 
 impl sys_at::AudioSink for AudioTrackObserver {
-    fn on_data(&self, data: &[i16], sample_rate: i32, nb_channels: usize, nb_frames: usize) {
+    fn on_data(
+        &self,
+        data: &[i16],
+        sample_rate: i32,
+        nb_channels: usize,
+        nb_frames: usize,
+        callback_time_ms: i64,
+        absolute_capture_timestamp_ms_present: bool,
+        absolute_capture_timestamp_ms: i64,
+    ) {
+        let absolute_capture_timestamp_ms = if absolute_capture_timestamp_ms_present {
+            Some(absolute_capture_timestamp_ms)
+        } else {
+            None
+        };
         let _ = self.frame_tx.send(AudioFrame {
             data: data.to_owned().into(),
             sample_rate: sample_rate as u32,
             num_channels: nb_channels as u32,
             samples_per_channel: nb_frames as u32,
+            callback_time_ms,
+            absolute_capture_timestamp_ms,
         });
     }
 }

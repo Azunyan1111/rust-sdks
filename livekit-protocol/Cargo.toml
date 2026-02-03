@@ -6,6 +6,9 @@ license = "Apache-2.0"
 description = "Livekit protocol and utilities for the Rust SDK"
 repository = "https://github.com/livekit/rust-sdks"
 
+[features]
+serde = []
+
 [dependencies]
 livekit-runtime = { workspace = true }
 tokio = { version = "1", default-features = false, features = [

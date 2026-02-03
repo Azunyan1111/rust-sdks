@@ -269,7 +269,7 @@ fn main() {
                 .file("src/objc_video_factory.mm")
                 .file("src/objc_video_frame_buffer.mm")
                 .flag("-stdlib=libc++")
-                .flag("-std=c++20")
+                .flag("-std=c++17")
                 .flag("-Wno-nullability-completeness");
         }
         "ios" => {

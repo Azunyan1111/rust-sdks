@@ -86,6 +86,9 @@ pub mod ffi {
             sample_rate: i32,
             nb_channels: usize,
             nb_frames: usize,
+            callback_time_ms: i64,
+            absolute_capture_timestamp_ms_present: bool,
+            absolute_capture_timestamp_ms: i64,
         );
     }
 }
@@ -106,7 +109,16 @@ unsafe impl ExternType for CompleteCallback {
 }
 
 pub trait AudioSink: Send {
-    fn on_data(&self, data: &[i16], sample_rate: i32, nb_channels: usize, nb_frames: usize);
+    fn on_data(
+        &self,
+        data: &[i16],
+        sample_rate: i32,
+        nb_channels: usize,
+        nb_frames: usize,
+        callback_time_ms: i64,
+        absolute_capture_timestamp_ms_present: bool,
+        absolute_capture_timestamp_ms: i64,
+    );
 }
 
 pub struct AudioSinkWrapper {
@@ -118,7 +130,24 @@ impl AudioSinkWrapper {
         Self { observer }
     }
 
-    fn on_data(&self, data: &[i16], sample_rate: i32, nb_channels: usize, nb_frames: usize) {
-        self.observer.on_data(data, sample_rate, nb_channels, nb_frames);
+    fn on_data(
+        &self,
+        data: &[i16],
+        sample_rate: i32,
+        nb_channels: usize,
+        nb_frames: usize,
+        callback_time_ms: i64,
+        absolute_capture_timestamp_ms_present: bool,
+        absolute_capture_timestamp_ms: i64,
+    ) {
+        self.observer.on_data(
+            data,
+            sample_rate,
+            nb_channels,
+            nb_frames,
+            callback_time_ms,
+            absolute_capture_timestamp_ms_present,
+            absolute_capture_timestamp_ms,
+        );
     }
 }

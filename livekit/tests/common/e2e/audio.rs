@@ -123,6 +123,8 @@ impl SineTrack {
                 sample_rate: params.sample_rate,
                 num_channels: params.num_channels,
                 samples_per_channel: samples_count as u32 / params.num_channels,
+                callback_time_ms: 0,
+                absolute_capture_timestamp_ms: None,
             };
             rtc_source.capture_frame(&frame).await.unwrap();
         }
