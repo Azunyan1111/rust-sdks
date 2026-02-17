@@ -18,6 +18,7 @@ pub mod apm;
 pub mod audio_mixer;
 pub mod audio_resampler;
 pub mod audio_track;
+pub mod encoded_audio_stream;
 pub mod candidate;
 pub mod data_channel;
 #[cfg(any(target_os = "macos", target_os = "windows", target_os = "linux"))]
